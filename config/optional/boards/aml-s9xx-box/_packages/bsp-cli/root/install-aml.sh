@@ -53,7 +53,11 @@ echo $DEV_EMMC
 echo "Start backup u-boot default"
 
 dd if="${DEV_EMMC}" of=/root/u-boot-default-aml.img bs=1M count=4
-
+if [ "$?" != "0" ]
+then
+	echo " CANNOT SAVE U-BOOT FROM ${DEV_EMMC} "
+	exit 1
+fi
 echo "Start create MBR and partittion"
 
 parted -s "${DEV_EMMC}" mklabel msdos
